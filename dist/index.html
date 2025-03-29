@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Choose Option</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f4f4f4;
+        }
+        .container {
+            text-align: center;
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .button {
+            padding: 15px 30px;
+            font-size: 18px;
+            margin: 10px;
+            cursor: pointer;
+            border: none;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+        .button:hover {
+            background-color: #ddd;
+        }
+        .use-gemine {
+            background-color: #4CAF50;
+            color: white;
+        }
+        .use-deepseek {
+            background-color: #2196F3;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Choose an Option</h1>
+        <button class="button use-gemine" onclick="useGemine()">Use Gemine</button>
+        <button class="button use-deepseek" onclick="useDeepseek()">Use Deepseek</button>
+    </div>
+
+    <script>
+        function useGemine() {
+            window.electron.send('gemini');
+        }
+
+        function useDeepseek() {
+            window.electron.send('deepseek');
+        }
+    </script>
+</body>
+</html>
