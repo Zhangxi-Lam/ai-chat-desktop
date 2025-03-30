@@ -24,21 +24,25 @@ var UserSettings = /** @class */ (function () {
         var defaultSettings = (_a = {},
             _a[exports.CHOICE] = exports.DEEPSEEK,
             _a);
-        var jsonData = JSON.stringify(defaultSettings, null, 2);
-        try {
-            fs.writeFileSync(filePath, jsonData);
-            console.log('Successfully wrote to %s', filePath);
-        }
-        catch (err) {
-            console.error('Error writing file:', err);
-        }
+        this.writeUserSettingsJson(filePath, defaultSettings);
     };
+    // Read user settings from JSON file synchronously
     UserSettings.prototype.readUserSettingsJson = function (filePath) {
         var jsonData = fs.readFileSync(filePath, "utf8");
-        this.data = JSON.parse(jsonData);
+        this.jsonData = JSON.parse(jsonData);
+    };
+    // Write user settings to JSON file synchronously
+    UserSettings.prototype.writeUserSettingsJson = function (filePath, jsonData) {
+        var jsonString = JSON.stringify(jsonData, null, 2);
+        fs.writeFileSync(filePath, jsonString);
     };
     UserSettings.prototype.getKey = function (key) {
-        return this.data[key];
+        this.readUserSettingsJson(this.dataPath);
+        return this.jsonData[key];
+    };
+    UserSettings.prototype.setKey = function (key, value) {
+        this.jsonData[key] = value;
+        this.writeUserSettingsJson(this.dataPath, this.jsonData);
     };
     return UserSettings;
 }());

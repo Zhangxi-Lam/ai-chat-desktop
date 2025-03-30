@@ -8,7 +8,7 @@ export const DEEPSEEK = 'deepseek';
 
 class UserSettings {
     dataPath: string;
-    data: any;
+    jsonData: any;
     
     constructor() {
         this.dataPath = path.join(app.getPath("userData"), "user_settings.json");
@@ -25,22 +25,29 @@ class UserSettings {
         const defaultSettings = {
             [CHOICE]: DEEPSEEK,
         }
-        const jsonData = JSON.stringify(defaultSettings, null, 2);
-        try {
-            fs.writeFileSync(filePath, jsonData);
-            console.log('Successfully wrote to %s', filePath);
-        } catch (err) {
-            console.error('Error writing file:', err);
-        }
+        this.writeUserSettingsJson(filePath, defaultSettings);
     }
 
+    // Read user settings from JSON file synchronously
     readUserSettingsJson(filePath: string) {
         const jsonData = fs.readFileSync(filePath, "utf8");
-        this.data = JSON.parse(jsonData);
+        this.jsonData = JSON.parse(jsonData);
+    }
+
+    // Write user settings to JSON file synchronously
+    writeUserSettingsJson(filePath: string, jsonData: any) {
+        const jsonString = JSON.stringify(jsonData, null, 2);
+        fs.writeFileSync(filePath, jsonString);
     }
 
     getKey(key: string): any {
-        return this.data[key];
+        this.readUserSettingsJson(this.dataPath);
+        return this.jsonData[key];
+    }
+
+    setKey(key: string, value: any) {
+        this.jsonData[key] = value;
+        this.writeUserSettingsJson(this.dataPath, this.jsonData);
     }
 }
 

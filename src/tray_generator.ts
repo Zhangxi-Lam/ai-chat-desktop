@@ -11,18 +11,24 @@ class TrayGenerator {
     }
 
     createTray(settings: UserSettings) {
-        console.log("Creating tray");
-        console.log(path.join(__dirname, 'assets', 'icon.png'));
         const contextMenu = Menu.buildFromTemplate([
             {
                 label: 'Gemini',
                 type: 'radio',
                 checked: settings.getKey(CHOICE) === GEMINI,
+                click: () => {
+                    console.log('Gemini selected');
+                    settings.setKey(CHOICE, GEMINI);
+                },
             },
             {
                 label: 'Deepseek',
                 type: 'radio',
                 checked: settings.getKey(CHOICE) === DEEPSEEK,
+                click: () => {
+                    console.log('Deepseek selected');
+                    settings.setKey(CHOICE, DEEPSEEK);
+                }
             },
         ]);
         this.tray.setContextMenu(contextMenu);

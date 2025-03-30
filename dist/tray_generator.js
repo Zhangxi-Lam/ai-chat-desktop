@@ -8,18 +8,24 @@ var TrayGenerator = /** @class */ (function () {
         this.tray = new Tray(path.join(__dirname, 'assets', 'icon.png'));
     }
     TrayGenerator.prototype.createTray = function (settings) {
-        console.log("Creating tray");
-        console.log(path.join(__dirname, 'assets', 'icon.png'));
         var contextMenu = Menu.buildFromTemplate([
             {
                 label: 'Gemini',
                 type: 'radio',
                 checked: settings.getKey(user_settings_1.CHOICE) === user_settings_1.GEMINI,
+                click: function () {
+                    console.log('Gemini selected');
+                    settings.setKey(user_settings_1.CHOICE, user_settings_1.GEMINI);
+                },
             },
             {
                 label: 'Deepseek',
                 type: 'radio',
                 checked: settings.getKey(user_settings_1.CHOICE) === user_settings_1.DEEPSEEK,
+                click: function () {
+                    console.log('Deepseek selected');
+                    settings.setKey(user_settings_1.CHOICE, user_settings_1.DEEPSEEK);
+                }
             },
         ]);
         this.tray.setContextMenu(contextMenu);
