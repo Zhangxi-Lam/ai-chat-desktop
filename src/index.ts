@@ -1,7 +1,9 @@
 import { app, BrowserWindow, nativeImage, screen, ipcMain } from "electron";
+import UserSettings from "./user_settings";
+import TrayGenerator from "./tray_generator";
 const path = require("path");
 
-const appUrl = `file://${path.join(__dirname, "index.html")}`;
+const appUrl = `file://${path.join(__dirname, "assets/index.html")}`;
 const googleUrl = "https:/gemini.google.com";
 const deepseekUrl = "https://chat.deepseek.com/";
 
@@ -30,10 +32,19 @@ function createWindow(url: string = appUrl) {
   win.loadURL(url);
 }
 
-app.whenReady().then(() => { createWindow() });
+app.whenReady().then(() => { 
+  console.log("when ready");
+  const settings = new UserSettings();
+  const tray = new TrayGenerator();
+  tray.createTray(settings);
+  createWindow() 
+});
 
 app.on('activate', () => {
-  if (BrowserWindow.getAllWindows().length === 0) { createWindow() }
+  if (BrowserWindow.getAllWindows().length === 0) { 
+    console.log("activate");
+    createWindow() 
+  }
 })
 
 app.on('window-all-closed', () => {

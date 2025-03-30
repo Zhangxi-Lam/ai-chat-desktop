@@ -1,8 +1,13 @@
 "use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 var electron_1 = require("electron");
+var user_settings_1 = __importDefault(require("./user_settings"));
+var tray_generator_1 = __importDefault(require("./tray_generator"));
 var path = require("path");
-var appUrl = "file://".concat(path.join(__dirname, "index.html"));
+var appUrl = "file://".concat(path.join(__dirname, "assets/index.html"));
 var googleUrl = "https:/gemini.google.com";
 var deepseekUrl = "https://chat.deepseek.com/";
 var win = null;
@@ -26,9 +31,16 @@ function createWindow(url) {
     });
     win.loadURL(url);
 }
-electron_1.app.whenReady().then(function () { createWindow(); });
+electron_1.app.whenReady().then(function () {
+    console.log("when ready");
+    var settings = new user_settings_1.default();
+    var tray = new tray_generator_1.default();
+    tray.createTray(settings);
+    createWindow();
+});
 electron_1.app.on('activate', function () {
     if (electron_1.BrowserWindow.getAllWindows().length === 0) {
+        console.log("activate");
         createWindow();
     }
 });
