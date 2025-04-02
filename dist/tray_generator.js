@@ -7,7 +7,7 @@ var TrayGenerator = /** @class */ (function () {
     function TrayGenerator() {
     }
     TrayGenerator.prototype.createTray = function (settings, window) {
-        this.tray = new Tray(path.join(__dirname, 'assets', 'icon.png'));
+        this.tray = new Tray(path.join(__dirname, 'assets', 'iconTemplate.png'));
         var contextMenu = Menu.buildFromTemplate([
             {
                 label: 'Gemini',

@@ -8,7 +8,7 @@ class TrayGenerator {
     tray: typeof Tray.prototype;
 
     createTray(settings: UserSettings, window: MainWindow) {
-        this.tray = new Tray(path.join(__dirname, 'assets', 'icon.png'));
+        this.tray = new Tray(path.join(__dirname, 'assets', 'iconTemplate.png'));
         const contextMenu = Menu.buildFromTemplate([
             {
                 label: 'Gemini',
