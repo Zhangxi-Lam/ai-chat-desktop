@@ -22,5 +22,6 @@ Use the menubar icon to choose between Gemini and Deepseek.
 
 ```bash
 $ xattr -c /Applications/Ai-Chat.app
+```
 
 4. Run the app.
